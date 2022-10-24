@@ -15,7 +15,7 @@ let countTime
 let minutes = 0
 let seconds = 0
 
-
+let timeArr = []
 
 const handleStart = () => {
 	clearInterval(countTime)
@@ -39,8 +39,24 @@ const handleStop = () => {
 	if (stopwatch.textContent !== '0:00') {
 		time.style.visibility = 'visible'
 		time.textContent = `Ostatni czas: ${stopwatch.textContent}`
+		timeArr.push(stopwatch.textContent)
 	}
 
+	clearStuff()
+}
+
+const handlePause = () => {
+	clearInterval(countTime)
+}
+
+const handleReset = () => {
+	clearStuff()
+	time.style.visibility = 'hidden'
+	timeArr = []
+
+}
+
+const clearStuff = () => {
 	clearInterval(countTime)
 	stopwatch.textContent = '0:00'
 	timeList.textContent = ''
@@ -48,10 +64,31 @@ const handleStop = () => {
 	minutes = 0
 }
 
-const handlePause = () => {
-	clearInterval(countTime)
+const handleArchiv = () => {
+let num = 1
+timeList.textContent = ''
+
+	timeArr.forEach(time => {
+		const newTime = document.createElement('li')
+		newTime.innerHTML = `Pomiar nr ${num++}: <span>${time}</span>`
+		timeList.appendChild(newTime)
+
+	})
+}
+
+const handleModal = () => {
+	modalShadow.style.display = 'block'
+	modalShadow.classList.toggle('modal-animation')
+}
+
+const closeModal = () => {
+	modalShadow.style.display = 'none'
 }
 
 startBtn.addEventListener('click', handleStart)
 pauseBtn.addEventListener('click', handlePause)
 stopBtn.addEventListener('click', handleStop)
+resetBtn.addEventListener('click', handleReset)
+archivBtn.addEventListener('click', handleArchiv)
+infoBtn.addEventListener('click', handleModal)
+closeModalBtn.addEventListener('click', closeModal)
