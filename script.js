@@ -15,6 +15,8 @@ let countTime
 let minutes = 0
 let seconds = 0
 
+
+
 const handleStart = () => {
 	clearInterval(countTime)
 
@@ -33,9 +35,23 @@ const handleStart = () => {
 	}, 50)
 }
 
+const handleStop = () => {
+	if (stopwatch.textContent !== '0:00') {
+		time.style.visibility = 'visible'
+		time.textContent = `Ostatni czas: ${stopwatch.textContent}`
+	}
+
+	clearInterval(countTime)
+	stopwatch.textContent = '0:00'
+	timeList.textContent = ''
+	seconds = 0
+	minutes = 0
+}
+
 const handlePause = () => {
-    clearInterval(countTime)
+	clearInterval(countTime)
 }
 
 startBtn.addEventListener('click', handleStart)
 pauseBtn.addEventListener('click', handlePause)
+stopBtn.addEventListener('click', handleStop)
